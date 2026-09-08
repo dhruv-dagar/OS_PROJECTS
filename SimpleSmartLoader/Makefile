@@ -1,20 +1,34 @@
-# Makefile for 32-bit SimpleSmartLoader
+# Simple Smart Loader — 32-bit Linux build
 
-CC = gcc
-CFLAGS = -Wall -Wextra -m32 -fPIC
-LDFLAGS = -shared -m32
-TARGET = lib_simpleloader.so
+CC := gcc
+CFLAGS := -Wall -Wextra -m32
+PIC_CFLAGS := -Wall -Wextra -m32 -fPIC
 
-all: $(TARGET) ../launch ../fib
+LOADER_LIB := lib_simpleloader.so
+LAUNCH := launch
+TESTS := fib helloworld sum
 
-$(TARGET): loader.c loader.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(TARGET) loader.c
+.PHONY: all clean tests
 
-../launch: ../launch.c loader.h
-	gcc -m32 -I. -Wl,-rpath,'$$ORIGIN/loader' -o ../launch ../launch.c -L. -l_simpleloader -ldl
+all: $(LOADER_LIB) $(LAUNCH) $(TESTS)
 
-../fib: ../fib.c
-	$(CC) -m32 -nostdlib -o ../fib ../fib.c
+$(LOADER_LIB): loader.c loader.h
+	$(CC) $(PIC_CFLAGS) -shared -o $@ loader.c
+
+$(LAUNCH): launch.c loader.h $(LOADER_LIB)
+	$(CC) $(CFLAGS) -I. -Wl,-rpath,'$$ORIGIN' -o $@ launch.c -L. -l_simpleloader -ldl
+
+fib: fib.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+helloworld: helloworld.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+sum: sum.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+tests: $(TESTS)
+	@echo "Built test ELF32 binaries: $(TESTS)"
 
 clean:
-	rm -f $(TARGET) ../launch ../fib
+	rm -f $(LOADER_LIB) $(LAUNCH) $(TESTS)
