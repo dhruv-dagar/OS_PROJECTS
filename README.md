@@ -15,7 +15,7 @@ A Unix-style interactive shell implemented in C for Linux. The project demonstra
 ## Build
 
 ```bash
-gcc -Wall -Wextra -O2 -o shell shell.c
+make
 ```
 
 ## Run
@@ -24,7 +24,7 @@ gcc -Wall -Wextra -O2 -o shell shell.c
 ./shell
 ```
 
-Example commands:
+## Example
 
 ```text
 ls -la
