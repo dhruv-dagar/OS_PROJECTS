@@ -1,6 +1,7 @@
 # Build artifacts
 *.o
 *.so
+*.out
 launch
 fib
 helloworld
@@ -16,3 +17,5 @@ vgcore.*
 .DS_Store
 .vscode/
 .idea/
+*.swp
+*.swo
