@@ -28,7 +28,7 @@ make
 
 The library divides an iteration space into chunks, creates worker threads, and assigns each worker a disjoint range of iterations. Workers invoke the user-provided function over their assigned range. The caller waits for all workers with `pthread_join()` before returning.
 
-For 2D workloads, the same idea is applied to matrix rows and columns so independent regions can execute concurrently.
+For 2D workloads, the same approach is applied to matrix regions so independent work can execute concurrently.
 
 ## OS concepts demonstrated
 
@@ -48,7 +48,8 @@ simple-multithreader/
 ├── .gitignore
 ├── simple-multithreader.h
 ├── vector.cpp
-└── matrix.cpp
+├── matrix.cpp
+└── IMPLEMENTATION OF SIMPLE MULTITHREADER.docx
 ```
 
 ## Author
