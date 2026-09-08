@@ -1,0 +1,21 @@
+# Build artifacts
+*.o
+*.so
+*.out
+launch
+fib
+helloworld
+sum
+
+# Debug / profiling
+*.dSYM/
+core
+core.*
+vgcore.*
+
+# Editor / OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
