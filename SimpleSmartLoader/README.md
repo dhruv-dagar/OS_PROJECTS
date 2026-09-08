@@ -17,7 +17,6 @@ A user-space ELF32 loader implemented in C for Linux. The project demonstrates l
 This project targets a 32-bit Linux userspace environment and requires multilib support.
 
 ```bash
-cd SimpleSmartLoader
 make
 ```
 
@@ -33,22 +32,35 @@ make
 
 `launch.c` validates the ELF input and invokes the loader. `loader.c` parses the ELF image and installs a `SIGSEGV` handler. When execution touches an unmapped page, the handler identifies the corresponding `PT_LOAD` segment, maps a page, copies the required file-backed bytes, zero-fills the remaining portion when needed, and applies the segment's protection flags.
 
+See [`ARCHITECTURE.md`](ARCHITECTURE.md) for the detailed execution flow and design trade-offs.
+
 ## Educational focus
 
-This project is a user-space simulation of demand paging and ELF loading. It is intended to demonstrate OS concepts such as virtual memory, page faults, executable formats, memory mapping, and protection—not to replace the Linux kernel's ELF loader.
+This project is a user-space demonstration of demand paging and ELF loading. It is intended to demonstrate OS concepts such as virtual memory, page faults, executable formats, memory mapping, and protection—not to replace the Linux kernel's ELF loader.
 
 ## Project structure
 
 ```text
-SimpleSmartLoader/
+simple-smart-loader/
+├── README.md
+├── ARCHITECTURE.md
+├── PORTFOLIO.md
+├── Makefile
+├── .gitignore
 ├── loader.c
 ├── loader.h
 ├── launch.c
 ├── fib.c
 ├── helloworld.c
-├── sum.c
-└── Makefile
+└── sum.c
 ```
+
+## Limitations
+
+- Supports ELF32 little-endian executables.
+- Designed for Linux environments with 32-bit compilation support.
+- Uses an educational SIGSEGV-based implementation rather than kernel-level page-fault handling.
+- The loader keeps the executable image in a userspace buffer to simplify page population.
 
 ## Author
 
