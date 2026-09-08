@@ -38,7 +38,7 @@ exit
 
 ## Architecture
 
-The shell reads a command line, parses it into commands and arguments, identifies pipelines/background execution, creates the required child processes, connects pipeline file descriptors, and launches programs with `execvp()`. Foreground jobs are synchronized with `waitpid()`, while background jobs are tracked without blocking the prompt.
+The shell reads a command line, parses it into commands and arguments, identifies pipelines and background execution, creates the required child processes, connects pipeline file descriptors, and launches programs with `execvp()`. Foreground jobs are synchronized with `waitpid()`, while background jobs are tracked without blocking the prompt.
 
 ## OS concepts demonstrated
 
@@ -49,7 +49,7 @@ The shell reads a command line, parses it into commands and arguments, identifie
 - Background process management
 - Shell built-ins
 - Command history
-- Signal-aware process handling
+- Process lifecycle handling
 
 ## Project structure
 
