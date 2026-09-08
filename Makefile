@@ -1,22 +1,34 @@
-CC = gcc
-CFLAGS = -Wall -m32
-TESTFLAGS = -Wall -m32 -no-pie -nostdlib
+# Simple Smart Loader — 32-bit Linux build
 
-BIN_DIR = bin
+CC := gcc
+CFLAGS := -Wall -Wextra -m32
+PIC_CFLAGS := -Wall -Wextra -m32 -fPIC
 
-# Targets
-all: $(BIN_DIR)/loader test/fib
+LOADER_LIB := lib_simpleloader.so
+LAUNCH := launch
+TESTS := fib helloworld sum
 
-# Build loader
-$(BIN_DIR)/loader: loader/loader.c loader/loader.h
-	mkdir -p $(BIN_DIR)
-	$(CC) $(CFLAGS) -o $(BIN_DIR)/loader loader/loader.c
+.PHONY: all clean tests
 
-# Build test program (fib)
-test/fib: test/fib.c
-	$(CC) $(TESTFLAGS) -o test/fib test/fib.c
+all: $(LOADER_LIB) $(LAUNCH) $(TESTS)
 
-# Cleanup
+$(LOADER_LIB): loader.c loader.h
+	$(CC) $(PIC_CFLAGS) -shared -o $@ loader.c
+
+$(LAUNCH): launch.c loader.h $(LOADER_LIB)
+	$(CC) $(CFLAGS) -I. -Wl,-rpath,'$$ORIGIN' -o $@ launch.c -L. -l_simpleloader -ldl
+
+fib: fib.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+helloworld: helloworld.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+sum: sum.c
+	$(CC) $(CFLAGS) -nostdlib -o $@ $<
+
+tests: $(TESTS)
+	@echo "Built test ELF32 binaries: $(TESTS)"
+
 clean:
-	rm -rf $(BIN_DIR)/*
-	rm -f test/fib
+	rm -f $(LOADER_LIB) $(LAUNCH) $(TESTS)
