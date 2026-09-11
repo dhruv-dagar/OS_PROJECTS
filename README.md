@@ -1,64 +1,19 @@
-# Process Scheduler
+# Operating Systems Projects
 
-A Linux process-scheduling simulator in C that demonstrates CPU scheduling, priorities, preemption, signals, shared memory, and process synchronization.
+This repository is the original coursework workspace for a set of Linux systems-programming projects. The polished, portfolio-ready versions are maintained as separate repositories.
 
-## Highlights
+## Standalone projects
 
-- Priority-based ready queue with configurable CPU count and time slice
-- Uses `fork()` to create workload processes
-- Uses `SIGSTOP` / `SIGCONT` for process preemption and dispatch
-- Handles `SIGCHLD` for child lifecycle events
-- Uses System V shared memory for scheduler state
-- Uses process-shared POSIX semaphores for synchronization
-- Maintains scheduling history and job state
-- Includes a shell interface for submitting executable jobs
+| Project | Repository | Focus |
+|---|---|---|
+| Simple Smart Loader | [Simple-Smart-Loader](https://github.com/dhruv-dagar/Simple-Smart-Loader) | ELF32 loading, demand paging, SIGSEGV, mmap, mprotect |
+| Process Scheduler | [process-scheduler](https://github.com/dhruv-dagar/process-scheduler) | Scheduling, signals, shared memory, semaphores |
+| Simple Shell | [simple-shell](https://github.com/dhruv-dagar/simple-shell) | fork/exec, pipes, background jobs, process control |
+| Simple Multithreader | [simple-multithreader](https://github.com/dhruv-dagar/simple-multithreader) | pthreads, parallel_for, workload partitioning |
 
-## Build
+## Repository organization
 
-```bash
-make
-```
-
-## Run
-
-```bash
-./simpleshell <NCPU> <TSLICE_MS>
-```
-
-Then submit jobs using:
-
-```text
-submit <executable> [priority]
-exit
-```
-
-## Architecture
-
-`simpleshell.c` provides the user-facing command interface and submits processes. `simplescheduler.c` manages the ready queue, dispatches processes across CPUs, enforces time slices, and coordinates process state using Linux signals and shared synchronization primitives.
-
-## OS concepts demonstrated
-
-- CPU scheduling and preemption
-- Process creation and lifecycle management
-- Signals and asynchronous events
-- Inter-process communication
-- Shared memory
-- Semaphores and race-condition prevention
-- Ready queues and priority scheduling
-
-## Project structure
-
-```text
-process-scheduler/
-├── README.md
-├── Makefile
-├── .gitignore
-├── simplescheduler.c
-├── simpleshell.c
-├── dummy_a.c
-├── dummy_b.c
-└── dummy_main.h
-```
+The original source tree is retained here as the coursework archive. Each standalone repository contains a focused README, relevant source files, a reproducible build system, and portfolio/interview notes.
 
 ## Author
 
